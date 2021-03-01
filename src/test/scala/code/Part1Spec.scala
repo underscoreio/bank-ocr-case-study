@@ -2,15 +2,29 @@ package code
 
 import org.scalatest._
 
+import scala.util.Success
+
 class Part1Spec extends WordSpec with Matchers with Part1TestCases {
   "part 1" should {
-    "have tests" in {
-      pending
+    "parse a single digit" in {
+      Main.parseDigit(testCase1a1.actual) shouldBe Success(testCase1a1.expected)
     }
   }
 }
 
 trait Part1TestCases {
+
+  val testCase1a1: TestCase =
+    TestCase.createDigit(
+      """
+      #
+      #  |
+      #  |
+      """,
+      "1"
+    )
+
+
   val testCase1a: TestCase =
     TestCase.create(
       """

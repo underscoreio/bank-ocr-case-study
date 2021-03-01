@@ -15,4 +15,14 @@ object TestCase {
 
   def create(actual: String, expected: String): TestCase =
     TestCase(formatDigits(9)(actual), expected)
+
+  def formatDigit(num: Int)(string: String): String =
+    string.trim
+      .stripMargin('#')
+      .split("\n")
+      .map(_.padTo(3 * num, ' '))
+      .mkString("\n")
+
+  def createDigit(actual: String, expected: String): TestCase =
+    TestCase(formatDigits(1)(actual), expected)
 }
