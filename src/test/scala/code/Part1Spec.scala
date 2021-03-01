@@ -7,11 +7,11 @@ import scala.util.Success
 class Part1Spec extends WordSpec with Matchers with Part1TestCases {
   "part 1" should {
     "parse a single digit" in {
-      Main.parseDigit(testCase1a1.actual) shouldBe Success(testCase1a1.expected)
+      Main.parseDigit(testCase1a1.actual) shouldBe testCase1a1.expected
     }
     Seq(testCase1a, testCase1b, testCase1c, testCase1d, testCase1e, testCase1f, testCase1g, testCase1h, testCase1i, testCase1j, testCase1k).foreach {
       testCase => s"successfully output ${testCase.expected}" in {
-        Main.parseInput(testCase.actual) shouldBe Success(testCase.expected)
+        Main.parseInput(testCase.actual) shouldBe testCase.expected
       }
     }
   }

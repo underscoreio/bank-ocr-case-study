@@ -5,32 +5,41 @@ import cats.implicits._
 import scala.util.{Failure, Success, Try}
 
 object Main {
-  def parseInput(input: String): Try[String] = {
+
+  def parseInput(input: String): String = {
     val rows = input.split("\\n").toList.map { line =>
       line.grouped(3).toList
     }
-    val digitGroups = rows match {
-      case l1 :: l2 :: l3 :: _ => (l1, l2, l3).zipped.toList
+    val result = rows match {
+      case l1 :: l2 :: l3 :: _ => {
+        val digitGroups = (l1, l2, l3).zipped.toList
+        digitGroups.map { group =>
+          parseDigit(s"${group._1}\n${group._2}\n${group._3}")
+        }.mkString
+      }
+      case _ => "?????????"
     }
-    digitGroups.traverse { group =>
-      parseDigit(s"${group._1}\n${group._2}\n${group._3}")
-    }.map(_.mkString)
-
+    if(result.contains("?")) {
+      result + " ILL"
+    }
+    else {
+      result
+    }
   }
 
-  def parseDigit(input: String): Try[String] =
+  def parseDigit(input: String): String =
     input.split("\\n").toList match {
-      case "   " :: "  |" :: "  |" :: _ => Success("1")
-      case " _ " :: " _|" :: "|_ " :: _ => Success("2")
-      case " _ " :: " _|" :: " _|" :: _ => Success("3")
-      case "   " :: "|_|" :: "  |" :: _ => Success("4")
-      case " _ " :: "|_ " :: " _|" :: _ => Success("5")
-      case " _ " :: "|_ " :: "|_|" :: _ => Success("6")
-      case " _ " :: "  |" :: "  |" :: _ => Success("7")
-      case " _ " :: "|_|" :: "|_|" :: _ => Success("8")
-      case " _ " :: "|_|" :: " _|" :: _ => Success("9")
-      case " _ " :: "| |" :: "|_|" :: _ => Success("0")
-      case _                            => Failure(new IllegalArgumentException("Following Strong was Invalid >:( :" + "\n" + input))
+      case "   " :: "  |" :: "  |" :: _ => "1"
+      case " _ " :: " _|" :: "|_ " :: _ => "2"
+      case " _ " :: " _|" :: " _|" :: _ => "3"
+      case "   " :: "|_|" :: "  |" :: _ => "4"
+      case " _ " :: "|_ " :: " _|" :: _ => "5"
+      case " _ " :: "|_ " :: "|_|" :: _ => "6"
+      case " _ " :: "  |" :: "  |" :: _ => "7"
+      case " _ " :: "|_|" :: "|_|" :: _ => "8"
+      case " _ " :: "|_|" :: " _|" :: _ => "9"
+      case " _ " :: "| |" :: "|_|" :: _ => "0"
+      case _                            => "?"
     }
 
   // account number:  3  4  5  8  8  2  8  6  5
