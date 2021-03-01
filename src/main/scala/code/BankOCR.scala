@@ -19,12 +19,7 @@ object Main {
       }
       case _ => "?????????"
     }
-    if(result.contains("?")) {
-      result + " ILL"
-    }
-    else {
-      result
-    }
+    result
   }
 
   def parseDigit(input: String): String =
@@ -52,6 +47,18 @@ object Main {
       case Success(value) => value.reverse.zipWithIndex.map {
         case (number, index) => number * (index + 1)
       }.sum % 11 == 0
+    }
+  }
+
+  def validatedResponse(input: String): String = {
+    val parsedInput = parseInput(input)
+
+    if (parsedInput.contains("?")) {
+      parsedInput + " ILL"
+    } else if (isValid(parsedInput)) {
+      parsedInput
+    } else {
+      parsedInput + " ERR"
     }
   }
 }
