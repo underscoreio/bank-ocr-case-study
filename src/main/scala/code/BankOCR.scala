@@ -5,8 +5,17 @@ import cats.implicits._
 import scala.util.{Failure, Success, Try}
 
 object Main {
-  def parseInput(input: String): String =
-    "TODO: Implement me!"
+  def parseInput(input: String): Try[String] = {
+    val rows = input.split("\\n").toList.map { line =>
+      line.grouped(3).toList
+    }
+    val digitGroups = rows match {
+      case l1::l2::l3::_ => (l1,l2,l3).zipped.toList
+    }
+    digitGroups.traverse { group =>
+      parseDigit(s"${group._1}\n${group._2}\n${group._3}")
+    }
+  }
 
   def parseDigit(input:String): Try[String] =
     input.split("\\n").toList match {
