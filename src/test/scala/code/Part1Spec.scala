@@ -9,6 +9,9 @@ class Part1Spec extends WordSpec with Matchers with Part1TestCases {
     "parse a single digit" in {
       Main.parseDigit(testCase1a1.actual) shouldBe Success(testCase1a1.expected)
     }
+    "parse a whole set of digits" in {
+      Main.parseInput(testCase1a.actual) shouldBe Success(testCase1a.expected)
+    }
   }
 }
 

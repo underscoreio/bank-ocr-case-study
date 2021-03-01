@@ -14,7 +14,8 @@ object Main {
     }
     digitGroups.traverse { group =>
       parseDigit(s"${group._1}\n${group._2}\n${group._3}")
-    }
+    }.map(_.mkString)
+
   }
 
   def parseDigit(input:String): Try[String] =
@@ -28,6 +29,7 @@ object Main {
       case " _ "::"  |"::"  |"::_ => Success("7")
       case " _ "::"|_|"::"|_|"::_ => Success("8")
       case " _ "::"|_|"::" _|"::_ => Success("9")
-      case _ => Failure(new IllegalArgumentException("oh no!"))
+      case " _ "::"| |"::"|_|"::_ => Success("0")
+      case _ => Failure(new IllegalArgumentException("Following Strong was Invalid >:( :" + "\n" + input))
     }
 }
